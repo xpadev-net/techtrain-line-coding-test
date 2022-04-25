@@ -14,10 +14,13 @@ foreach ($data as $value) {
     $diff_long = $long - $last_long;
     $is_slow = $diff_long / $diff_time * 60 * 60 <= 10;
     if ($is_slow) {
-        $slow_time += $time * isNight($time) ? 1.25 : 1;
+        $slow_time += $time * isNight($time) && $last_night ? 1.25 : 1;
     } else {
-        $total_long += $long * isNight($time) ? 1.25 : 1;
+        $total_long += $long * isNight($time) && $last_night ? 1.25 : 1;
     }
+    $last_long = $long;
+    $last_time = $time;
+    $last_night = isNight($time);
 }
 
 $fare_sum = 410;
